@@ -7,7 +7,7 @@ export const seoconfig = {
 		"Mable game - guess the multiplication",
 	type: "website",
 	image: {
-		url: "https://www.numberbeegame.com/favicon-325.png", 
+		url: "https://www.mablegame.com/favicon-325.png", 
 		alt: "Yellow rectagular face with eyes and mouth", 
 		width: 325,
 		height: 325
