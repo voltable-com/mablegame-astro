@@ -1,0 +1,32 @@
+---
+import SocialShare from '@component/SocialShare.astro';
+---
+
+<div x-data="mable()" class="a">
+
+    <div x-show="ended" x-cloak>
+        <p>Contratulations! You guessed the multiplication! </p>
+        <p>You are right. Correct numbers are: <code x-html='solution'></code> </p>
+        <p><a href="/">Click to start again!</a></p>
+        <p>Pass the challenge to friends:</p>
+    </div>
+
+    <div x-show="wrong" x-cloak>
+        <p>Hmm! You finished the game but hot found the numbers! </p>
+        <p>The correct numbers are: <code x-html='solution'></code> </p>
+        <p><a href="/">Click to start again!</a></p>
+        <p>Could your friends could guess the multiplication?</p>
+    </div>
+
+    <p x-show="ended || wrong" x-cloak>
+        <SocialShare />
+    </p>
+    
+    <div class="b" id="b" @click="aclick">
+        <template x-for="_ in new Array(19)" x-cloak>
+            <template x-for="_ in new Array(10)" x-cloak>
+                <div></div>
+            </template>
+        </template>
+    </div>
+</div>

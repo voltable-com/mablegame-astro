@@ -1,0 +1,5 @@
+GitHub: https://github.com/voltable-com
+Twitter: https://twitter.com/VoltableCom
+Personal: https://www.voltable.com
+
+Checkout the https://humanstxt.org/ protocol to see how you should format your humans.txt file!

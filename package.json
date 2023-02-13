@@ -1,0 +1,24 @@
+{
+  "name": "@voltable.com/mablegame",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "fav": "bin/favicon.sh",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^0.15.1",
+    "@astrojs/node": "^5.0.3",
+    "@vite-pwa/astro": "^0.0.1",
+    "astro": "^2.0.10",
+    "astro-compress": "^1.1.28",
+    "astro-seo": "^0.7.0",
+    "vite-plugin-pwa": "^0.14.1",
+    "workbox-window": "^6.5.4"
+  }
+}

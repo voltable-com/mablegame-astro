@@ -1,0 +1,23 @@
+#!/bin/sh
+
+INPUT="public/favicon.svg"
+MAIN="public/"
+
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-512.png" -w 512 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-48.png" -w  48 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-32.png" -w  32 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-16.png" -w  16 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-60.png" -w  60 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-72.png" -w  72 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-76.png" -w  76 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-96.png" -w  96 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-144.png" -w 144 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-250.png" -w 250 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-180.png" -w 180 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-325.png" -w 325 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-114.png" -w 114 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-120.png" -w 120 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-192.png" -w 192 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-57.png" -w 57 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon-152.png" -w 152 "${INPUT}"
+inkscape --export-type="png" --export-filename="${MAIN}/favicon.png" -w 64 "${INPUT}"

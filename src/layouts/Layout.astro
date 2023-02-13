@@ -1,0 +1,93 @@
+---
+import '@style/reset.css';
+import '@style/m.css';
+
+import { SEO } from "astro-seo"
+import { seoconfig } from "@util/seoconfig"
+import Favicons from "@component/Favicons.astro"
+import Fonts from "@component/Fonts.astro"
+import GoogleTagManager from "@component/GoogleTagManager.astro"
+import GoogleTagManagerHead from "@component/GoogleTagManagerHead.astro"
+import CookieConsent from "@component/CookieConsent.astro"
+import CookieConsentStyle from "@component/CookieConsentStyle.astro"
+
+// Props
+export interface Props {
+	title: string
+	ogTitle?: string
+	description?: string
+	image?: {
+		url: string
+		alt: string
+	}
+}
+const {
+	title,
+	ogTitle,
+	description,
+	image
+} = Astro.props as Props
+---
+<!DOCTYPE html>
+<html lang="en" class="theme-light">
+<head>
+
+    <!-- Global meta tags. -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Voltable.com, @VoltableCom">
+    <meta name="keywords" content="voltable, online game, web game, mable game">
+    <link rel="manifest" href="manifest.webmanifest">
+    
+    <script src="/js/m.js" is:inline></script>
+    <script defer src="/js/a.js" is:inline></script>
+
+    <SEO
+        title={title}
+        description={seoconfig.description || description}
+        openGraph={{
+            basic: {
+                title: ogTitle || title,
+                type: "website",
+                image: seoconfig.image.url || image.url
+            },
+            image: {
+                width: seoconfig.image.width,
+                height: seoconfig.image.height,
+                alt: seoconfig.image.alt || image.alt
+            },
+            optional: {
+                siteName: seoconfig.siteName,
+                description: seoconfig.description || description
+            }
+        }}
+        twitter={{
+            ccard: seoconfig.twitter.card,
+            site: seoconfig.twitter.site,
+            title: ogTitle || title,
+            description: seoconfig.description || description,
+            image: seoconfig.twitter.image,
+            imageAlt: seoconfig.twitter.imageAlt,
+            creator: seoconfig.twitter.creator
+        }}
+    />
+    
+    <Fonts />
+    <Favicons />
+    <CookieConsentStyle />
+    <GoogleTagManagerHead id="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" />
+
+</head>
+<body>
+
+    <div class="a">
+        <slot />
+    </div>
+
+    <GoogleTagManager id="G-9TSX4XKJLR"/>
+    <CookieConsent />
+
+</body>
+</html>

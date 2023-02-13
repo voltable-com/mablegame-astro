@@ -1,0 +1,174 @@
+/* reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+* {
+    margin: 0;
+}
+html, body {
+    height: 100%;
+}
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+input, button, textarea, select {
+font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+overflow-wrap: break-word;
+}
+#root, #__next {
+isolation: isolate;
+}
+/** app */
+.theme-light {
+    --default-background-color: #ddd;
+    --default-color: #000;
+    --d-cell-color: rgba(255,0,0,.5);
+    --line-color: rgba(0,0,0,0.7);
+    --ch-color: white;
+    --ch-back: black;
+    --w-color: rgb(38, 142, 59);
+    --a-color: #00f;
+}
+.theme-dark {
+    --default-background-color: #000;
+    --default-color: #aaa;
+    --d-cell-color: rgba(255,0,0,.5);
+    --line-color: rgba(255,255,255,0.5);
+    --ch-color: black;
+    --ch-back: white;
+    --w-color: yellow;
+    --a-color: #8cabd9;
+}
+:root {
+    --a-width: 410px;
+}
+.w {color: var(--w-color);font-weight: bold;}
+html {
+    -webkit-text-size-adjust:100%;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    line-height:1.5;
+    -moz-tab-size:4;
+    tab-size:4
+} 
+body {
+    background-color: var(--default-background-color);
+    color: var(--default-color);
+}
+code {
+    color: var(--w-color);
+    font-weight: bold;
+    font-size: 120%;
+}
+a {
+    text-decoration: none;
+    color: var(--a-color);
+}
+p, h1, h2, hr, .theme-switch-wrapper {margin-bottom: 1em;}
+h3 {margin: 1rem 0;}
+footer {margin-top: 1em;}
+img {display:inline-flex}
+.a {margin: 0 auto;width: var(--a-width);text-align: center;}
+.hr {padding: 10px 0;}
+.b, .bo {
+    margin: 3px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
+.bo {
+    grid-template-columns: repeat(3, 1fr);
+}
+.b div, .bo div {
+    border: 1px solid var(--d-cell-color);
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:2.5rem;
+}
+.ch {
+    color: var(--ch-color);
+    background-color: var(--ch-back);
+    font-weight: bold;
+    font-size: 125%;
+}
+label {width: 100%;}
+.b div:nth-child(n+41):nth-child(-n+50),
+.b div:nth-child(n+131):nth-child(-n+140) {border-bottom: 3px solid var(--line-color);}
+.bb {border-bottom: 3px solid var(--line-color) !important;}
+[name="lv"] { position: fixed;opacity: 0;}
+[x-cloak] { display: none !important; }
+.input {
+    width: 1.8em;
+}
+.tb {
+    border-radius: 15px;
+    padding: 5px 15px;
+    color: white;
+    margin:0 5px 5px 0;
+    display: block;
+}
+.tw {
+    background-color: #1da1f2;
+}
+.fb {
+    background-color: #46629f;
+}
+.cf {
+    background-color: #FFDD00;
+    color: black;
+}
+/*Simple css to style it like a toggle switch*/
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:7px;
+}
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+.theme-switch input {
+    display:none;
+}
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+input:checked + .slider {
+    background-color: #66bb6a;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+.slider.round {
+    border-radius: 34px;
+}
+.slider.round:before {
+    border-radius: 50%;
+}
