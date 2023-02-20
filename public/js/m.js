@@ -83,16 +83,20 @@ const mable = () => ({
   createInput: function(value) {
     let oldvalue = value;
     let input = document.createElement('input');
+    input.type = 'number';
+    input.inputMode = 'numeric';
+    input.pattern = '[0-9]*';
     input.maxLength = 1;
     input.size = 1;
-    input.className = 'input';
+    input.className = 'input no-spin';
     if(value !== 'x') {
       input.value = value;
     }
     input.addEventListener('keydown', e => {
+      alert(e.key);
       if(isFinite(e.key)) {
         e.target.parentNode.innerText = e.key;
-      } else if(e.key === 'Delete') {
+      } else if(e.key === 'Delete' || e.key === 'Backspace' || e.key === 'Process') {
         e.target.parentNode.innerText = 'x'; 
       } else {
         e.target.parentNode.innerText = oldvalue; 
