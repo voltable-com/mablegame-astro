@@ -93,7 +93,6 @@ const mable = () => ({
       input.value = value;
     }
     input.addEventListener('keydown', e => {
-      alert(e.key);
       if(isFinite(e.key)) {
         e.target.parentNode.innerText = e.key;
       } else if(e.key === 'Delete' || e.key === 'Backspace' || e.key === 'Process') {
