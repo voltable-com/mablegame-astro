@@ -1,15 +1,16 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-		"types": ["astro/client", "vite-plugin-pwa/info"],
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"types": [
+			"astro/client",
+			"vite-plugin-pwa/info"
+		],
 		"resolveJsonModule": true,
 		"baseUrl": ".",
 		"paths": {
-			"@component/*": ["src/components/*"],
-			"@style/*": ["src/styles/*"],
-			"@script/*": ["src/scripts/*"],
-			"@layout/*": ["src/layouts/*"],
-			"@util/*": ["utils/*"],
+			"@/*": [
+				"./src/*"
+			]
 		}
 	}
 }

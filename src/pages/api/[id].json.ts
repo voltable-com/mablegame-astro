@@ -1,5 +1,4 @@
-import type { APIRoute } from 'astro';
-import { data } from '../../../data/n.json';
+import { data } from '@/data/n.json';
 
 const getData = (id: string) => {
   let number = data[id]
@@ -12,16 +11,27 @@ const getData = (id: string) => {
   return Buffer.from(JSON.stringify(obj)).toString('base64');
 }
 
-export const get: APIRoute = ({ params, request }) => {
+/**
+ * Get the data for the given id
+ * 
+ * @param params 
+ * @param request 
+ * @returns 
+ */
+export async function GET({ params, request }) {
   const id = params.id;
-  return {
-    body: JSON.stringify({
-      data: getData(id)
-    })
-  }
-};
+  return new Response(
+    JSON.stringify(
+      getData(id)
+    )
+  )
+}
 
-
+/**
+ * Generate all static data for our game
+ * 
+ * @returns 
+ */
 export async function getStaticPaths() {
   const posts = Array.from(Array(12400).keys()).map(x => x + 1);
 

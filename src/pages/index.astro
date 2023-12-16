@@ -1,12 +1,11 @@
 ---
-import ToggleTheme from '@component/ToggleTheme.astro'
-import Footer from '@component/Footer.astro'
-import EtoroBanner from '@component/EtoroBanner.astro'
-import HowToPlay from '@component/HowToPlay.astro'
-import AboutGame from '@component/AboutGame.astro'
-import GameHeader from '@component/GameHeader.astro'
-import Game from '@component/Game.astro'
-import Layout from '@layout/Layout.astro'
+import ToggleTheme from '@/components/ToggleTheme.astro'
+import Footer from '@/components/Footer.astro'
+import HowToPlay from '@/components/HowToPlay.astro'
+import AboutGame from '@/components/AboutGame.astro'
+import GameHeader from '@/components/GameHeader.astro'
+import Game from '@/components/Game.astro'
+import Layout from '@/layouts/Layout.astro'
 
 const title = "Mable game by Voltable.com - guess the multiplication"
 ---
@@ -16,7 +15,6 @@ const title = "Mable game by Voltable.com - guess the multiplication"
   <Game />
   <HowToPlay />
   <AboutGame />
-  <EtoroBanner />
   <Footer />
 </Layout>
 

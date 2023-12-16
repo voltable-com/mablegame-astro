@@ -1,15 +1,13 @@
 ---
-import '@style/reset.css';
-import '@style/m.css';
+import '@/styles/reset.css'
+import '@/styles/main.css'
 
 import { SEO } from "astro-seo"
-import { seoconfig } from "@util/seoconfig"
-import Favicons from "@component/Favicons.astro"
-import Fonts from "@component/Fonts.astro"
-import GoogleTagManager from "@component/GoogleTagManager.astro"
-import GoogleTagManagerHead from "@component/GoogleTagManagerHead.astro"
-import CookieConsent from "@component/CookieConsent.astro"
-import CookieConsentStyle from "@component/CookieConsentStyle.astro"
+import { seoconfig } from "@/utils/seoconfig"
+import Favicons from "@/components/Favicons.astro"
+import Fonts from "@/components/Fonts.astro"
+import CookieConsent from "@/components/CookieConsent.astro"
+import CookieConsentStyle from "@/components/CookieConsentStyle.astro"
 
 // Props
 export interface Props {
@@ -41,8 +39,8 @@ const {
     <meta name="keywords" content="voltable, online game, web game, mable game">
     <link rel="manifest" href="manifest.webmanifest">
 
-    <script src="/js/m.js" is:inline></script>
-    <script defer src="/js/a.js" is:inline></script>
+    <script src="/js/game.js" is:inline></script>
+    <script defer src="/js/alpine.js" is:inline></script>
 
     <SEO
         title={title}
@@ -78,7 +76,6 @@ const {
     <Fonts />
     <Favicons />
     <CookieConsentStyle />
-    <GoogleTagManagerHead />
 
 </head>
 <body>
@@ -87,7 +84,6 @@ const {
         <slot />
     </div>
 
-    <GoogleTagManager id="G-K9SB4M1Y5M"/>
     <CookieConsent />
 
 </body>
