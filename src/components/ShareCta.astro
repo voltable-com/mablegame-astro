@@ -1,0 +1,68 @@
+---
+import SocialShare from '@/components/SocialShare.astro'
+---
+<section class="section" aria-labelledby="share-title">
+    <div class="container">
+        <div class="cta">
+            <div class="cta-copy">
+                <h2 id="share-title">Could your friends guess the multiplication?</h2>
+                <p>Pass the challenge on and compare who cracks A &times; B first.</p>
+            </div>
+            <div class="cta-actions">
+                <SocialShare />
+            </div>
+            <span class="sparkle s1" aria-hidden="true"></span>
+            <span class="sparkle s2" aria-hidden="true"></span>
+            <span class="sparkle s3" aria-hidden="true"></span>
+        </div>
+    </div>
+</section>
+
+<style>
+.cta {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem 2.5rem;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(circle at 12% 20%, rgb(255 255 255 / .28), transparent 40%),
+        linear-gradient(120deg, #7c4dff, #d9368b 55%, #e2572b);
+    color: #fff;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    isolation: isolate;
+}
+.cta-copy {
+    max-width: 34rem;
+}
+.cta h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: .6rem;
+}
+.cta p {
+    font-size: 1.15rem;
+    opacity: .92;
+}
+.cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+.sparkle {
+    position: absolute;
+    z-index: -1;
+    width: 1.1rem;
+    aspect-ratio: 1;
+    background: #fff;
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+    opacity: .7;
+    animation: float 5s ease-in-out infinite;
+}
+.s1 { top: 14%; right: 38%; }
+.s2 { bottom: 16%; right: 6%; width: 1.8rem; animation-delay: -1.5s; }
+.s3 { top: 12%; right: 12%; width: .8rem; animation-delay: -3s; }
+</style>

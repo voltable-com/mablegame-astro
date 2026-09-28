@@ -12,12 +12,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^9.5.1",
-    "astro": "^5.16.0",
-    "astro-seo": "^0.8.4",
-    "workbox-window": "^7.4.0"
+    "@astrojs/node": "^11.1.6",
+    "astro": "^7.3.5",
+    "astro-seo": "^1.2.0"
   },
   "devDependencies": {
-    "@vite-pwa/astro": "^1.1.1"
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3",
+    "workbox-build": "^7.4.1"
   }
 }

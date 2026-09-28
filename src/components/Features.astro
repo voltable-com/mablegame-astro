@@ -1,0 +1,98 @@
+---
+const features = [
+    {
+        glyph: '0–9',
+        tone: 'sun',
+        title: 'Ten digits, once each',
+        text: 'The two hidden numbers are built from all ten digits, 0 to 9, and no digit is ever repeated.',
+    },
+    {
+        glyph: 'A×B',
+        tone: 'pink',
+        title: 'One puzzle, two views',
+        text: 'The board shows A × B and B × A. Same factors, same product, different working — double the clues.',
+    },
+    {
+        glyph: '?',
+        tone: 'grape',
+        title: 'Click and guess',
+        text: 'Pick any x, type the digit you think hides there and change your mind as often as you like.',
+    },
+    {
+        glyph: '12k',
+        tone: 'mint',
+        title: 'A fresh puzzle every time',
+        text: 'Each game picks one of 12,400 puzzles at random. Hit “New puzzle” whenever you want another one.',
+    },
+]
+---
+<section class="section" aria-labelledby="features-title">
+    <div class="container">
+        <div class="section-head">
+            <p class="eyebrow">The puzzle at a glance</p>
+            <h2 id="features-title">Small grid, <span class="text-gradient">big aha moments</span></h2>
+            <p>Mable is a logic game for anyone who enjoys numbers: no timers, no sign-up, just you and a multiplication waiting to be cracked.</p>
+        </div>
+
+        <ul class="features">
+            {features.map((feature) => (
+                <li class={`feature card tone-${feature.tone}`}>
+                    <span class="glyph" aria-hidden="true">{feature.glyph}</span>
+                    <h3>{feature.title}</h3>
+                    <p>{feature.text}</p>
+                </li>
+            ))}
+        </ul>
+    </div>
+</section>
+
+<style>
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.feature {
+    --tone: var(--sun);
+    padding: 1.75rem 1.5rem;
+    transition: transform .3s var(--ease-bounce), box-shadow .3s ease;
+}
+.feature:hover {
+    transform: translateY(-6px) rotate(-.6deg);
+    box-shadow: var(--shadow-lg);
+}
+.tone-sun { --tone: var(--sun); --tone-ink: #3b2b00; }
+.tone-pink { --tone: var(--pink); --tone-ink: #fff; }
+.tone-grape { --tone: var(--grape); --tone-ink: #fff; }
+.tone-mint { --tone: var(--mint); --tone-ink: #03281b; }
+.glyph {
+    display: inline-grid;
+    place-items: center;
+    min-width: 3.6rem;
+    height: 3.6rem;
+    margin-bottom: 1.1rem;
+    padding-inline: .7rem;
+    border-radius: 16px;
+    background: var(--tone);
+    color: var(--tone-ink);
+    font-family: var(--mono);
+    font-size: 1.25rem;
+    font-weight: 800;
+    box-shadow: 0 5px 0 color-mix(in srgb, var(--tone), #000 22%), 0 14px 24px -10px var(--tone);
+    transform: rotate(-4deg);
+    transition: transform .35s var(--ease-bounce);
+}
+.feature:hover .glyph {
+    transform: rotate(4deg) scale(1.08);
+}
+.feature h3 {
+    font-size: 1.35rem;
+    margin-bottom: .5rem;
+}
+.feature p {
+    color: var(--muted);
+}
+</style>

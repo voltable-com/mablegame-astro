@@ -1,13 +1,4 @@
 /**
- * Generate an array of integers from `start` to `end` (inclusive)
- * 
- * @param {*} start 
- * @param {*} end 
- * @returns Array of integers from `start` to `end` (inclusive)
- */
-const range = (start, end) => e > s ? [s, ...range(s + 1, e)] : [s];
-
-/**
  * Generate a random integer between `min` and `max` (inclusive)
  * 
  * @param {*} min
@@ -19,66 +10,85 @@ function rnd(min, max) {
 }
 
 /**
+ * Set the value of a board cell and flag the digits entered by the player
+ * 
+ * @param {HTMLElement} cell - Board cell
+ * @param {string} value - Digit or 'x'
+ */
+const set_cell = function (cell, value) {
+  cell.innerText = value;
+  cell.classList.toggle('g', value !== 'x' && !cell.classList.contains('w'));
+};
+
+/**
  * Create an input element to enter a
  * numeric input with only one digit
  * 
+ * @param {HTMLElement} cell - Board cell that will hold the input
  * @param {*} value - Initial value of the input element
+ * @param {Function} onchange - Called after the cell value is committed
  * @returns 
  */
-const create_input = function(value) {
+const create_input = function(cell, value, onchange) {
   const oldvalue = value;
-  const  input =  document.createElement('input');
+  const input = document.createElement('input');
   input.type = 'number';
   input.inputMode = 'numeric';
   input.pattern = '[0-9]*';
   input.maxLength = 1;
   input.size = 1;
   input.className = 'input no-spin';
+  input.setAttribute('aria-label', 'Digit');
   if (value !== 'x') {
     input.value = value;
   }
-  input.addEventListener('keydown', e => {
-    if (isFinite(e.key)) {
-      e.target.parentNode.innerText = e.key;
-    } else if (e.key === 'Delete' || e.key === 'Backspace' || e.key === 'Process') {
-      e.target.parentNode.innerText = 'x';
-    } else {
-      e.target.parentNode.innerText = oldvalue;
+  // Replacing the cell content removes the input, which may fire `blur` synchronously
+  let done = false;
+  const commit = function (v) {
+    if (done) {
+      return;
     }
-    e.target.remove();
+    done = true;
+    set_cell(cell, v);
+    onchange();
+  };
+  input.addEventListener('keydown', e => {
+    if (/^[0-9]$/.test(e.key)) {
+      commit(e.key);
+    } else if (e.key === 'Delete' || e.key === 'Backspace' || e.key === 'Process') {
+      commit('x');
+    } else if (e.key !== 'Unidentified') {
+      commit(oldvalue);
+    }
   });
-  input.addEventListener('blur', e => {
-    e.target.parentNode.innerText = oldvalue;
-    e.target.remove();
-  });  
+  // Virtual keyboards report key 'Unidentified', the digit arrives through `input`
+  input.addEventListener('input', () => {
+    const digit = input.value.replace(/\D/g, '').slice(-1);
+    commit(digit === '' ? 'x' : digit);
+  });
+  input.addEventListener('blur', () => commit(oldvalue));
 
   return input;
 };
 
 /**
  * Class to manage swith between light and dark theme
+ * 
+ * The initial theme is applied by an inline script in the page head,
+ * so this component only mirrors and updates it.
  */
 const toggletheme = () => ({
+  dark: false,
   init: function () {
-    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-
-    if (currentTheme) {
-      document.documentElement.className = currentTheme;
-
-      if (currentTheme === 'theme-dark') {
-        this.$refs.toggleTheme.checked = true;
-      }
-    }
+    this.dark = document.documentElement.classList.contains('theme-dark');
   },
-  switchTheme: function (e) {
-    if (e.target.checked) {
-      document.documentElement.className = 'theme-dark';
-      localStorage.setItem('theme', 'theme-dark');
-    }
-    else {
-      document.documentElement.className = 'theme-light';
-      localStorage.setItem('theme', 'theme-light');
-    }
+  switchTheme: function () {
+    this.dark = !this.dark;
+    const theme = this.dark ? 'theme-dark' : 'theme-light';
+    document.documentElement.className = theme;
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (e) {}
   }
 });
 
@@ -111,6 +121,21 @@ const mable = () => ({
   ended: false,
   wrong: false,
   /**
+   * Board is drawn and ready to play
+   */
+  ready: false,
+  /**
+   * Number of hidden digits on the board and how many are still hidden
+   */
+  total: 0,
+  left: 0,
+  get found() {
+    return this.total - this.left;
+  },
+  get progress() {
+    return this.total ? Math.round(this.found / this.total * 100) : 0;
+  },
+  /**
    * Initialize the game
    * Retriere the numbers from the API and draw the game
    */
@@ -138,6 +163,9 @@ const mable = () => ({
       this.setData(r);
       this.draw(this.x1, 1);
       this.draw(this.x2, 11);
+      this.total = this.countHidden();
+      this.left = this.total;
+      this.ready = true;
     });
   },
   /**
@@ -156,17 +184,32 @@ const mable = () => ({
     this.cells = Array.from(document.querySelectorAll('#b div'));
   },
   /**
+   * Count the cells that still hold an 'x'
+   * 
+   * @returns number
+   */
+  countHidden: function () {
+    return this.cells.reduce((t, x) => x.innerText === 'x' ? t + 1 : t, 0);
+  },
+  /**
    * Check if the game is ended
    * 
    * @returns void
    */
   checkState: function () {
-    let cnt = this.cells.reduce((t, x) => x.innerText === 'x' ? t + 1 : t, 0);
-    if (cnt === 0) {
+    this.left = this.countHidden();
+    if (this.left === 0) {
       let founded = this.multiplicationFounded();
       this.solution = this.x1[0][0] + ' &times; ' + this.x1[1][0];
       this.ended = founded;
       this.wrong = !founded;
+      this.$nextTick(() => {
+        const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.$refs.result.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+      });
+    } else {
+      this.ended = false;
+      this.wrong = false;
     }
   },
   getp: function (x1) {
@@ -181,13 +224,14 @@ const mable = () => ({
   aclick: function (e) {
     if (e.target.dataset.c && e.target.dataset.c >= 0) {
       if (e.ctrlKey) {
-        e.target.innerText = this.f[e.target.dataset.c];
+        set_cell(e.target, this.f[e.target.dataset.c]);
         this.checkState();
       } else if (!e.target.classList.contains('w')) {
-        let value = e.target.innerText;
-        e.target.innerText = '';
-        let input = create_input(value);
-        e.target.append(input);
+        let cell = e.target;
+        let value = cell.innerText;
+        cell.innerText = '';
+        let input = create_input(cell, value, () => this.checkState());
+        cell.append(input);
         input.focus();
       }
     }
@@ -213,7 +257,19 @@ const mable = () => ({
       this.drawNumber(v, vp, pos, p);
       p = p + 1;
     }
+    this.drawSign(x[1][0], pos);
+    this.drawLine(3, pos);
     this.drawLine(p, pos);
+  },
+  /**
+   * Mark the cell left of the second factor to show the multiplication sign
+   * 
+   * @param {string} v - Second factor
+   * @param {number} pos - Board row where the multiplication starts
+   */
+  drawSign: function (v, pos) {
+    let cpos = (1 + pos) * 9 + 1 + pos % 10 + (10 - v.length) - 1;
+    this.cells[cpos].classList.add('op');
   },
   drawNumber: function (v, vp, pos, p) {
     for (let j = 0, n = v.length; j < n; j++) {

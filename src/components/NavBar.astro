@@ -1,0 +1,114 @@
+---
+import ToggleTheme from '@/components/ToggleTheme.astro'
+
+const links = [
+    { href: '#play', label: 'Play' },
+    { href: '#how-to-play', label: 'How to play' },
+    { href: '#tips', label: 'Tips' },
+    { href: '#about', label: 'About' },
+]
+---
+<header class="nav-shell">
+    <nav class="nav container" aria-label="Main">
+        <a class="brand" href="/">
+            <img src="/favicon.svg" alt="" width="36" height="36" />
+            <span>Mable</span>
+        </a>
+        <ul class="links">
+            {links.map((link) => (
+                <li><a href={link.href}>{link.label}</a></li>
+            ))}
+        </ul>
+        <div class="tools">
+            <a class="by" href="https://www.voltable.com/">Voltable.com</a>
+            <ToggleTheme />
+        </div>
+    </nav>
+</header>
+
+<style>
+.nav-shell {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding-block: .75rem;
+}
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .45rem .5rem .45rem .9rem;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+}
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    color: var(--text);
+    font-family: var(--display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+.brand img {
+    width: 2.1rem;
+    height: 2.1rem;
+    transition: transform .35s var(--ease-bounce);
+}
+.brand:hover img {
+    transform: rotate(-12deg) scale(1.1);
+}
+.links {
+    display: flex;
+    gap: .25rem;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+}
+.links a {
+    display: block;
+    padding: .45rem .9rem;
+    border-radius: var(--radius-pill);
+    color: var(--muted);
+    font-weight: 800;
+    text-decoration: none;
+    transition: background-color .2s ease, color .2s ease;
+}
+.links a:hover {
+    background: var(--surface-tint);
+    color: var(--text);
+}
+.tools {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-left: auto;
+}
+.links + .tools {
+    margin-left: 0;
+}
+.by {
+    color: var(--muted);
+    font-size: .9rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+.by:hover {
+    color: var(--link);
+}
+@media (max-width: 760px) {
+    .links {
+        display: none;
+    }
+}
+@media (max-width: 380px) {
+    .by {
+        display: none;
+    }
+}
+</style>

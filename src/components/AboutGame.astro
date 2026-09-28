@@ -1,5 +1,105 @@
-<section>
-    <h3>About the game</h3>
-    <p>In the table above there are shown two variants of same multiplication, by reversing the order og the factors.</p>
-    <p>Khown that the two numbers are build with all digits from zero to nine used only once, your quest is to find multiplication operation.</p>
+---
+const stats = [
+    { value: '10', label: 'digits, each used once' },
+    { value: '2', label: 'five-digit numbers' },
+    { value: '12,400', label: 'puzzles to discover' },
+    { value: '0', label: 'sign-ups needed' },
+]
+---
+<section id="about" class="section" aria-labelledby="about-title">
+    <div class="container">
+        <div class="about card">
+            <div class="about-copy">
+                <p class="eyebrow">About the game</p>
+                <h2 id="about-title">A tiny puzzle with a <span class="text-gradient">big personality</span></h2>
+                <p>In the board above there are shown two variants of the same multiplication, by reversing the order of the factors.</p>
+                <p>Knowing that the two numbers are built with all digits from zero to nine, each used only once, your quest is to find the multiplication operation.</p>
+                <p>Mable is made by <a href="https://www.voltable.com/">Voltable.com</a> and runs right in your browser. Grab a coffee, warm up your number sense and see how quickly you can spot the pattern.</p>
+            </div>
+            <ul class="stats" aria-label="Mable in numbers">
+                {stats.map((stat) => (
+                    <li>
+                        <strong>{stat.value}</strong>
+                        <span>{stat.label}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </div>
 </section>
+
+<style>
+.about {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding: clamp(1.75rem, 5vw, 3.5rem);
+    overflow: hidden;
+}
+.about::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 60%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 204 0 / .35), transparent 70%);
+    pointer-events: none;
+}
+.about-copy h2 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    margin-bottom: 1.25rem;
+}
+.about-copy p {
+    color: var(--muted);
+    font-size: 1.1rem;
+}
+.about-copy p + p {
+    margin-top: .9rem;
+}
+.stats {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.stats li {
+    display: grid;
+    gap: .2rem;
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    background: var(--surface-solid);
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: transform .3s var(--ease-bounce);
+}
+.stats li:hover {
+    transform: translateY(-4px) scale(1.03);
+}
+.stats strong {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+}
+.stats li:nth-child(1) strong { color: var(--sun-ink); }
+.stats li:nth-child(2) strong { color: var(--pink-ink); }
+.stats li:nth-child(3) strong { color: var(--grape-ink); }
+.stats li:nth-child(4) strong { color: var(--mint-ink); }
+.stats span {
+    color: var(--muted);
+    font-size: .9rem;
+    font-weight: 700;
+}
+@media (max-width: 860px) {
+    .about {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

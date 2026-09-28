@@ -1,3 +1,66 @@
-<footer>
-    <p>Mable game &copy; 2022 Voltable.com <br/>All rights reserved.</p>
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <a class="brand" href="/">
+            <img src="/favicon.svg" alt="" width="40" height="40" />
+            <span>Mable</span>
+        </a>
+        <nav aria-label="Footer">
+            <ul class="footer-links">
+                <li><a href="#play">Play</a></li>
+                <li><a href="#how-to-play">How to play</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="https://www.voltable.com/">Voltable.com</a></li>
+            </ul>
+        </nav>
+        <p class="copy">Mable game &copy; 2022 Voltable.com <br/>All rights reserved.</p>
+    </div>
 </footer>
+
+<style>
+.site-footer {
+    margin-top: var(--section-space);
+    padding-block: 2.5rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    color: var(--text);
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.footer-links a {
+    color: var(--muted);
+    font-weight: 700;
+    text-decoration: none;
+}
+.footer-links a:hover {
+    color: var(--link);
+}
+.copy {
+    color: var(--muted);
+    font-size: .9rem;
+}
+</style>

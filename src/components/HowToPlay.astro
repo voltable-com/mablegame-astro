@@ -1,17 +1,90 @@
-<section>
-    <h3>How to play</h3>
-    <p>The quest of the game is to discover the multiplication operation.</p>
-    <p>We have in figure representation of following multiplications: <code>A &times; B</code> and <code>B &times; A</code></p>
-    <p>The numbers do not begin with zero.</p>
-    <p>You must fill all missing digits represented by <code>'x'</code> in the table above</p>
-    <p>To play you must <code>click</code> on a <code>'x'</code> and enter the number you think it may be.</p>
-    <p>
-        To revert a filled digit you have three options:
-        <p>
-            1) Press <code>CTRL</code> key and than <code>click</code> on the box with a digit <br/>
-            2) <code>Click</code> on the box with a digit and press <code>Delete</code> key <br />
-            3) <code>Click</code> on the box with a digit and press <code>Backspace</code> key <br />
-        </p>
-    </p>
-    <p>The game ends when all <code>'x's</code> are removed, with one of posibile statuses, you discovered the multiplication or not!</p>
+<section id="how-to-play" class="section" aria-labelledby="how-title">
+    <div class="container">
+        <div class="section-head">
+            <p class="eyebrow">How to play</p>
+            <h2 id="how-title">Four steps to <span class="text-gradient">crack the code</span></h2>
+            <p>The quest of the game is to discover the multiplication operation.</p>
+        </div>
+
+        <ol class="steps">
+            <li class="step card">
+                <h3>Study the board</h3>
+                <p>The board shows the following multiplications: <code>A &times; B</code> and <code>B &times; A</code>. The numbers do not begin with zero.</p>
+            </li>
+            <li class="step card">
+                <h3>Fill every x</h3>
+                <p>You must fill all missing digits represented by <code>x</code> in the board. To play, <kbd>click</kbd> on an <code>x</code> and enter the number you think it may be.</p>
+            </li>
+            <li class="step card">
+                <h3>Change your mind</h3>
+                <p>To revert a filled digit you have three options:</p>
+                <ul class="undo">
+                    <li>Press <kbd>Ctrl</kbd> and then <kbd>click</kbd> on the box with a digit</li>
+                    <li><kbd>Click</kbd> on the box with a digit and press <kbd>Delete</kbd></li>
+                    <li><kbd>Click</kbd> on the box with a digit and press <kbd>Backspace</kbd></li>
+                </ul>
+            </li>
+            <li class="step card">
+                <h3>Finish the grid</h3>
+                <p>The game ends when all <code>x</code>'s are removed, with one of two possible outcomes: you discovered the multiplication, or you see the answer and try again!</p>
+            </li>
+        </ol>
+    </div>
 </section>
+
+<style>
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+}
+.step {
+    position: relative;
+    padding: 2.4rem 1.5rem 1.6rem;
+    counter-increment: step;
+}
+.step::before {
+    content: counter(step);
+    position: absolute;
+    top: -1.1rem;
+    left: 1.4rem;
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--grape), var(--pink));
+    color: #fff;
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    box-shadow: 0 8px 18px -6px var(--pink);
+}
+.step:nth-child(2)::before { background: linear-gradient(135deg, var(--pink), var(--coral)); }
+.step:nth-child(3)::before { background: linear-gradient(135deg, var(--sky), var(--grape)); }
+.step:nth-child(4)::before { background: linear-gradient(135deg, var(--mint), var(--sky)); }
+.step h3 {
+    font-size: 1.3rem;
+    margin-bottom: .5rem;
+}
+.step p, .undo {
+    color: var(--muted);
+}
+.undo {
+    display: grid;
+    gap: .5rem;
+    margin: .75rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: .95rem;
+}
+.undo li {
+    padding: .55rem .75rem;
+    border-radius: 12px;
+    background: var(--surface-tint);
+}
+</style>

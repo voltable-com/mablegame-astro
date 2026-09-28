@@ -22,8 +22,8 @@ export interface Props {
 const {
 	title,
 	ogTitle,
-	description,
-	image
+	description = seoconfig.description,
+	image = seoconfig.image
 } = Astro.props as Props
 ---
 <!DOCTYPE html>
@@ -37,36 +37,57 @@ const {
 
     <meta name="author" content="Voltable.com, @VoltableCom">
     <meta name="keywords" content="voltable, online game, web game, mable game">
-    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="manifest" href="/manifest.webmanifest">
+    {import.meta.env.PROD && (
+        <script is:inline>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+            }
+        </script>
+    )}
 
-    <script src="js/game.js" is:inline></script>
-    <script defer src="js/alpine.js" is:inline></script>
+    <!-- Apply the saved (or system) theme before first paint. -->
+    <script is:inline>
+        (() => {
+            let theme = null;
+            try {
+                theme = localStorage.getItem('theme');
+            } catch (e) {}
+            if (theme !== 'theme-light' && theme !== 'theme-dark') {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+            }
+            document.documentElement.className = theme;
+        })();
+    </script>
+
+    <script src="/js/game.js" is:inline></script>
+    <script defer src="/js/alpine.js" is:inline></script>
 
     <SEO
         title={title}
         canonical={seoconfig.baseURL}
-        description={seoconfig.description || description}
+        description={description}
         openGraph={{
             basic: {
                 title: ogTitle || title,
                 type: "website",
-                image: seoconfig.image.url || image.url
+                image: image.url
             },
             image: {
                 width: seoconfig.image.width,
                 height: seoconfig.image.height,
-                alt: seoconfig.image.alt || image.alt
+                alt: image.alt
             },
             optional: {
                 siteName: seoconfig.siteName,
-                description: seoconfig.description || description
+                description: description
             }
         }}
         twitter={{
-            ccard: seoconfig.twitter.card,
+            card: seoconfig.twitter.card,
             site: seoconfig.twitter.site,
             title: ogTitle || title,
-            description: seoconfig.description || description,
+            description: description,
             image: seoconfig.twitter.image,
             imageAlt: seoconfig.twitter.imageAlt,
             creator: seoconfig.twitter.creator
@@ -80,11 +101,30 @@ const {
 </head>
 <body>
 
-    <div class="a">
-        <slot />
-    </div>
+    <a class="skip-link" href="#play">Skip to the game</a>
+
+    <slot />
 
     <CookieConsent />
 
 </body>
 </html>
+
+<style>
+.skip-link {
+    position: absolute;
+    top: -3rem;
+    left: 1rem;
+    z-index: 100;
+    padding: .6rem 1rem;
+    border-radius: 999px;
+    background: var(--sun);
+    color: #231d36;
+    font-weight: 800;
+    text-decoration: none;
+    transition: top .2s ease;
+}
+.skip-link:focus {
+    top: 1rem;
+}
+</style>

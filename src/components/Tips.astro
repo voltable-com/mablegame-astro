@@ -1,0 +1,113 @@
+---
+const tips = [
+    {
+        title: 'Start at the right',
+        text: 'The last digit of the product depends only on the last digits of A and B. It is often the quickest first clue.',
+    },
+    {
+        title: 'Hunt for the zero',
+        text: 'Exactly one of the two numbers contains a 0, and it is never the first digit. A zero adds no partial row, so the grid with one row fewer has the 0 in its second number.',
+    },
+    {
+        title: 'Spot the copy',
+        text: 'A partial row that repeats the top number, just shifted, means that digit of the second number is a 1.',
+    },
+    {
+        title: 'Share the answer line',
+        text: 'Both grids end with the same product, so every digit you uncover in one bottom line also belongs in the other.',
+    },
+    {
+        title: 'Count the leftovers',
+        text: 'Every digit is used only once. Whatever already appears in A cannot appear in B, which quickly narrows your options.',
+    },
+]
+---
+<section id="tips" class="section" aria-labelledby="tips-title">
+    <div class="container tips-layout">
+        <div class="tips-intro">
+            <p class="eyebrow">Detective tips</p>
+            <h2 id="tips-title">Stuck? Think like a <span class="text-gradient">number detective</span></h2>
+            <p>No guessing blindly required. These little rules of long multiplication turn a wall of x's into a trail of clues.</p>
+            <a class="btn btn-primary" href="#play">Put them to work</a>
+        </div>
+        <ol class="tips">
+            {tips.map((tip) => (
+                <li class="tip card">
+                    <h3>{tip.title}</h3>
+                    <p>{tip.text}</p>
+                </li>
+            ))}
+        </ol>
+    </div>
+</section>
+
+<style>
+.tips-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+}
+.tips-intro {
+    position: sticky;
+    top: 6.5rem;
+}
+.tips-intro h2 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    margin-bottom: 1rem;
+}
+.tips-intro p {
+    color: var(--muted);
+    font-size: 1.125rem;
+    margin-bottom: 1.75rem;
+}
+.tips {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: tip;
+}
+.tip {
+    position: relative;
+    padding: 1.25rem 1.5rem 1.25rem 4.75rem;
+    counter-increment: tip;
+    transition: transform .3s var(--ease-bounce);
+}
+.tip:hover {
+    transform: translateX(6px);
+}
+.tip::before {
+    content: counter(tip, decimal-leading-zero);
+    position: absolute;
+    top: 1.2rem;
+    left: 1.25rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 12px;
+    background: var(--cell-given-bg);
+    color: var(--cell-given-fg);
+    font-family: var(--mono);
+    font-weight: 800;
+    box-shadow: 0 3px 0 var(--cell-given-edge);
+}
+.tip h3 {
+    font-size: 1.2rem;
+    margin-bottom: .3rem;
+}
+.tip p {
+    color: var(--muted);
+}
+@media (max-width: 860px) {
+    .tips-layout {
+        grid-template-columns: 1fr;
+    }
+    .tips-intro {
+        position: static;
+        text-align: center;
+    }
+}
+</style>

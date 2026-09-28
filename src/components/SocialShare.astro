@@ -1,3 +1,43 @@
-<a href="https://twitter.com/intent/tweet?text=Check+this+little+fun+discovery+number+game!&url=http://www.numberbeegame.com" rel="noopener" target="_blank" class="tw tb">Tweet!</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.numberbeegame.com" rel="noopener" target="_blank" class="fb tb">Facebook!</a>
+---
+import { seoconfig } from "@/utils/seoconfig"
+
+const url = encodeURIComponent(seoconfig.baseURL)
+const text = encodeURIComponent("Check this little fun discovery number game!")
+---
+<a href={`https://twitter.com/intent/tweet?text=${text}&url=${url}`} rel="noopener" target="_blank" class="tw tb">Tweet!</a>
+<a href={`https://www.facebook.com/sharer/sharer.php?u=${url}`} rel="noopener" target="_blank" class="fb tb">Facebook!</a>
 <a href="https://www.buymeacoffee.com/voltable.com" rel="noopener" target="_blank" class="cf tb">Support me with a coffee!</a>
+
+<style>
+.tb {
+    display: inline-flex;
+    align-items: center;
+    padding: .55rem 1.1rem;
+    border-radius: var(--radius-pill);
+    font-weight: 800;
+    font-size: .95rem;
+    text-decoration: none;
+    box-shadow: 0 3px 0 rgb(0 0 0 / .2);
+    transition: transform .2s var(--ease-bounce), box-shadow .2s ease;
+}
+.tb:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgb(0 0 0 / .2);
+}
+.tb:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgb(0 0 0 / .2);
+}
+.tw {
+    background-color: #0f1419;
+    color: #fff;
+}
+.fb {
+    background-color: #1668d9;
+    color: #fff;
+}
+.cf {
+    background-color: #ffdd00;
+    color: #231d36;
+}
+</style>

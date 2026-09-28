@@ -8,7 +8,7 @@ export const seoconfig = {
 	type: "website",
 	image: {
 		url: "https://www.mablegame.com/favicon-325.png", 
-		alt: "Yellow rectagular face with eyes and mouth", 
+		alt: "Yellow rectangular face with eyes and mouth", 
 		width: 325,
 		height: 325
 	},
@@ -17,10 +17,10 @@ export const seoconfig = {
 		card: "summary_large_image",
         site: "@VoltableCom",
         title: "Mable game - guess the multiplication",
-        description: "Mable game - guess the multiplicatione",
+        description: "Mable game - guess the multiplication",
         image: "https://www.mablegame.com/favicon-250.png",
-        imageAlt: "Yellow rectagular face with eyes and mouth",
+        imageAlt: "Yellow rectangular face with eyes and mouth",
         creator: "@VoltableCom"
 
 	}
-}
+} as const

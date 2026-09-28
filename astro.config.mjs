@@ -1,7 +1,5 @@
-import { defineConfig } from "astro/config";
-
-// https://astro.build/config
-import AstroPWA from "@vite-pwa/astro";
+import { defineConfig, fontProviders } from "astro/config";
+import serviceWorker from "./src/integrations/service-worker";
 import { seoconfig } from "./src/utils/seoconfig";
 
 // https://astro.build/config
@@ -10,49 +8,40 @@ export default defineConfig({
   build: {
     assets: "assets",
   },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Fredoka",
+      cssVariable: "--font-display",
+      weights: ["300 700"],
+      styles: ["normal"],
+      subsets: ["latin"],
+      fallbacks: ["ui-rounded", "sans-serif"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Nunito",
+      cssVariable: "--font-body",
+      weights: ["200 1000"],
+      styles: ["normal"],
+      subsets: ["latin"],
+      fallbacks: ["system-ui", "sans-serif"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "JetBrains Mono",
+      cssVariable: "--font-mono",
+      weights: ["100 800"],
+      styles: ["normal"],
+      subsets: ["latin"],
+      fallbacks: ["ui-monospace", "monospace"],
+    },
+  ],
   vite: {
     logLevel: "info",
     define: {
       __DATE__: `'${new Date().toISOString()}'`,
     },
   },
-  integrations: [
-    AstroPWA({
-      mode: "development",
-      base: "/",
-      scope: "/",
-      includeAssets: ["favicon.svg"],
-      manifest: {
-        name: "Mable game by Voltable.com - guess the multiplication",
-        short_name: "Mable Game by Voltable.com",
-        theme_color: "#ffffff",
-        start_url: "/",
-        icons: [
-          {
-            src: "favicon-192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "favicon-512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-          {
-            src: "favicon-512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
-          },
-        ],
-      },
-      workbox: {
-        globPatterns: ["**/*.{css,js,html,svg,png,ico,txt}"],
-      },
-      devOptions: {
-        enabled: true,
-        navigateFallback: "/404",
-      },
-    }),
-  ],
+  integrations: [serviceWorker()],
 });

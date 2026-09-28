@@ -1,12 +1,12 @@
 {
 	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist", "public/js"],
 	"compilerOptions": {
 		"types": [
-			"astro/client",
-			"vite-plugin-pwa/info"
+			"astro/client"
 		],
 		"resolveJsonModule": true,
-		"baseUrl": ".",
 		"paths": {
 			"@/*": [
 				"./src/*"
