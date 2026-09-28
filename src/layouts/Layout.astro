@@ -25,6 +25,8 @@ const {
 	description = seoconfig.description,
 	image = seoconfig.image
 } = Astro.props as Props
+
+const base = import.meta.env.BASE_URL
 ---
 <!DOCTYPE html>
 <html lang="en" class="theme-light">
@@ -37,11 +39,11 @@ const {
 
     <meta name="author" content="Voltable.com, @VoltableCom">
     <meta name="keywords" content="voltable, online game, web game, mable game">
-    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="manifest" href={`${base}manifest.webmanifest`}>
     {import.meta.env.PROD && (
-        <script is:inline>
+        <script is:inline define:vars={{ base }}>
             if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+                window.addEventListener('load', () => navigator.serviceWorker.register(`${base}sw.js`));
             }
         </script>
     )}
@@ -60,8 +62,8 @@ const {
         })();
     </script>
 
-    <script src="/js/game.js" is:inline></script>
-    <script defer src="/js/alpine.js" is:inline></script>
+    <script src={`${base}js/game.js`} is:inline></script>
+    <script defer src={`${base}js/alpine.js`} is:inline></script>
 
     <SEO
         title={title}

@@ -5,6 +5,7 @@ import { seoconfig } from "./src/utils/seoconfig";
 // https://astro.build/config
 export default defineConfig({
   site: seoconfig.baseURL,
+  base: "/games/mable/",
   build: {
     assets: "assets",
   },

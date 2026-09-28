@@ -1,3 +1,6 @@
+/** API folder, resolved from this script's own URL (`<base>/js/game.js`) */
+const API_BASE = new URL("../api/", document.currentScript.src).href;
+
 /**
  * Generate a random integer between `min` and `max` (inclusive)
  * 
@@ -158,7 +161,7 @@ const mable = () => ({
    * @returns void
    */ 
   getData: function (id) {
-    let apiUrl = "/api/" + id + ".json";
+    let apiUrl = API_BASE + id + ".json";
     fetch(apiUrl).then(r => r.json()).then(r => {
       this.setData(r);
       this.draw(this.x1, 1);
