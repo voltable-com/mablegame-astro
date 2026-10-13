@@ -1,5 +1,6 @@
 {
   "name": "@voltable.com/mablegame",
+  "packageManager": "pnpm@11.18.0",
   "type": "module",
   "version": "0.0.1",
   "private": true,

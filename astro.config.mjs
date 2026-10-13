@@ -1,11 +1,13 @@
 import { defineConfig, fontProviders } from "astro/config";
 import serviceWorker from "./src/integrations/service-worker";
-import { seoconfig } from "./src/utils/seoconfig";
 
 // https://astro.build/config
 export default defineConfig({
-  site: seoconfig.baseURL,
-  base: "/games/mable/",
+  // `site` stays the bare origin: Astro composes canonical/absolute URLs from
+  // site + base, so the /game/mable/ prefix lives only in `base` and in
+  // seoconfig.baseURL (which astro-seo writes into <link rel=canonical>).
+  site: "https://www.voltable.com",
+  base: "/game/mable/",
   build: {
     assets: "assets",
   },

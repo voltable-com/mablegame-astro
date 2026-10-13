@@ -1,0 +1,51 @@
+{
+	# No admin endpoint, no ACME: TLS ends at the reverse proxy in front, which
+	# is also where the public hostname (www.voltable.com) and HSTS live.
+	admin off
+	auto_https off
+	persist_config off
+}
+
+:8080 {
+	# The Astro bundle was built with base /game/mable/ and is copied to
+	# /srv/game/mable, so every baked URL resolves straight off this root.
+	root * /srv
+	encode zstd gzip
+
+	# Security headers for every response this container answers (documents,
+	# assets, redirects). Mirrors the add_header set of the static voltable.com
+	# site files, minus Strict-Transport-Security — TLS is terminated upstream.
+	header X-Content-Type-Options "nosniff"
+	header X-Frame-Options "SAMEORIGIN"
+	header X-XSS-Protection "1; mode=block"
+	header Referrer-Policy "strict-origin-when-cross-origin"
+	header Permissions-Policy "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), xr-spatial-tracking=()"
+	header Cross-Origin-Opener-Policy "same-origin"
+	header Cross-Origin-Resource-Policy "same-origin"
+	header X-Permitted-Cross-Domain-Policies "none"
+	header X-Download-Options "noopen"
+	# Same-origin game: 'unsafe-inline' for the theme bootstrap/SW-registration
+	# scripts Astro inlines, 'unsafe-eval' + cdn.jsdelivr.net because Alpine.js
+	# compiles x-data expressions with new Function and cookieconsent is loaded
+	# from the CDN. X-Frame-Options stays SAMEORIGIN (not DENY): the game is
+	# embedded under www.voltable.com itself.
+	header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+
+	# Hashed build chunks never change name (build.assets = "assets").
+	@hashed path /game/mable/assets/*
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+	# sw.js must always revalidate or workbox's skipWaiting never reaches clients.
+	@sw path /game/mable/sw.js
+	header @sw Cache-Control "no-cache"
+
+	# Explicit index.html is the same document as the directory: 301 it (the
+	# file_server answers /game/mable/ from index.html natively, no loop).
+	@rootindex path / /index.html /index.html/
+	redir @rootindex /game/mable/ 301
+	@docindex path /game/mable/index.html /game/mable/index.html/
+	redir @docindex /game/mable/ 301
+
+	# Multi-page static site: no SPA fallback. Missing paths (including
+	# /game/mable/anything.js with an extension) 404 from the file server.
+	file_server
+}
